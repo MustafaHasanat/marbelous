@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-interface UserRequestBody {
+interface NewUserSchema {
     name: string;
     email: string;
 }
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
             data: {
                 name: formData.get("name") as string,
                 email: formData.get("email") as string,
-            },
+            } as NewUserSchema,
         });
 
         return NextResponse.json(
