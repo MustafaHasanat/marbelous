@@ -7,16 +7,18 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
     request: NextRequest,
-    { params: { id } }: { params: { id: string } }
+    { params: { identifier } }: { params: { identifier: string } }
 ) {
     try {
         await jwtGuard(request);
 
-        const order = await prisma.order.findUnique({ where: { id: id } });
+        const record = await prisma.marbelous.findUnique({
+            where: { identifier },
+        });
 
         return NextResponse.json(
             {
-                data: order,
+                data: record,
                 error: null,
                 status: true,
             },
@@ -36,28 +38,21 @@ export async function GET(
 
 export async function PATCH(
     request: NextRequest,
-    { params: { id } }: { params: { id: string } }
+    { params: { identifier } }: { params: { identifier: string } }
 ) {
     try {
         await jwtGuard(request);
 
-        const formData: FormData = await request.formData();
+        const data = await request.json();
 
-        const order = await prisma.order.update({
-            where: { id },
-            data: {
-                name: formData.get("name") as string,
-                email: formData.get("email") as string,
-                phoneNumber: formData.get("phoneNumber") as string,
-                description: formData.get("description") as string,
-                city: formData.get("city") as string,
-                address: formData.get("address") as string,
-            },
+        const record = await prisma.marbelous.update({
+            where: { identifier },
+            data,
         });
 
         return NextResponse.json(
             {
-                data: order,
+                data: record,
                 error: null,
                 status: true,
             },
@@ -77,16 +72,16 @@ export async function PATCH(
 
 export async function DELETE(
     request: NextRequest,
-    { params: { id } }: { params: { id: string } }
+    { params: { identifier } }: { params: { identifier: string } }
 ) {
     try {
         await jwtGuard(request);
 
-        const order = await prisma.order.delete({ where: { id: id } });
+        const record = await prisma.marbelous.delete({ where: { identifier } });
 
         return NextResponse.json(
             {
-                data: order,
+                data: record,
                 error: null,
                 status: true,
             },

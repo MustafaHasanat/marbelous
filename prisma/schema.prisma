@@ -34,15 +34,23 @@ model Item {
 }
 
 model Order {
-  id           String   @id @default(uuid())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  name         String
-  email        String
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  email       String
   phoneNumber String
-  description  String
-  city         String
-  address      String
-  item         Item?    @relation(fields: [itemId], references: [id])
-  itemId       String?  @unique
+  description String
+  city        String
+  address     String
+  item        Item?    @relation(fields: [itemId], references: [id])
+  itemId      String?  @unique
+}
+
+model Marbelous {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  identifier String   @unique
+  data       Json
 }
