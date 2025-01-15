@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { jwtGuard } from "../actions";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
     try {
+        jwtGuard(request);
+
         const orders = await prisma.order.findMany();
 
         return Response.json({
@@ -27,6 +30,8 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
     try {
+        jwtGuard(request);
+
         const formData: FormData = await request.formData();
 
         const order = await prisma.order.create({
