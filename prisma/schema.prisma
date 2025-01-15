@@ -47,6 +47,15 @@ model Order {
   itemId      String?  @unique
 }
 
+model Testimonial {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  image     String?
+  message   String?
+}
+
 model Marbelous {
   id         String   @id @default(uuid())
   createdAt  DateTime @default(now())
