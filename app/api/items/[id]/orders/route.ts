@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/configs/prisma";
 import { jwtGuard } from "@/app/api/actions";
 
 export const dynamic = "force-dynamic";

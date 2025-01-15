@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { generateToken } from "@/lib/jwt";
+import { prisma } from "@/lib/configs/prisma";
+import { generateToken } from "@/lib/configs/jwt";
 import bcrypt from "bcrypt";
 
 export async function POST(request: Request) {

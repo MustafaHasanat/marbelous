@@ -1,4 +1,4 @@
-import { verifyToken } from "@/lib/jwt";
+import { verifyToken } from "@/lib/configs/jwt";
 import { NextRequest } from "next/server";
 
 export const jwtGuard = async (request: NextRequest) => {
