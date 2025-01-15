@@ -7,6 +7,16 @@ const nextConfig = {
         ignoreBuildErrors: true,
     },
 
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "kaiser-leap.atlassian.net",
+                pathname: "**",
+            },
+
+        ],
+    },
 };
 
 export default nextConfig;

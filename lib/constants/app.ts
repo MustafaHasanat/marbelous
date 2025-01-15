@@ -7,8 +7,7 @@ export const BACKEND_BASE = process.env.NEXT_PUBLIC_BACKEND_DOMAIN;
 export const CACHE_KEY_NAME = "cache-key";
 export const CACHE_KEY_VALUE = "abc1234567"; // ! don't change this unless you want to clear your users' cache
 
-export const PAGE_SIZE_OBJ = {
-};
+export const PAGE_SIZE_OBJ = {};
 
 export const SCREENS = {
     mobile: 412,

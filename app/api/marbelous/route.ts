@@ -9,16 +9,11 @@ export async function GET(request: NextRequest) {
     try {
         await jwtGuard(request);
 
-        const searchParams = request.nextUrl.searchParams;
-        const identifier = searchParams.get("identifier") as string;
-
-        const data = await prisma.marbelous.findUnique({
-            where: { identifier },
-        });
+        const records = await prisma.marbelous.findMany();
 
         return NextResponse.json(
             {
-                data,
+                data: records,
                 error: null,
                 status: true,
             },
