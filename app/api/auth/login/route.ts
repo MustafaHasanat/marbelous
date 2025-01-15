@@ -1,18 +1,21 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { generateToken } from '@/lib/jwt';
-import bcrypt from 'bcrypt';
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { generateToken } from "@/lib/jwt";
+import bcrypt from "bcrypt";
 
 export async function POST(request: Request) {
     try {
-        const { email, password } = await request.json();
+        const formData: FormData = await request.formData();
+
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
 
         // Find user in the database
         const user = await prisma.user.findUnique({ where: { email } });
 
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return NextResponse.json(
-                { error: 'Invalid email or password' },
+                { error: "Invalid email or password" },
                 { status: 401 }
             );
         }
@@ -21,13 +24,17 @@ export async function POST(request: Request) {
         const token = generateToken({ userId: user.id });
 
         return NextResponse.json({
-            token,
-            user: { id: user.id, email: user.email },
+            data: {
+                token,
+                user: { id: user.id, email: user.email },
+            },
+            error: null,
+            status: true,
         });
     } catch (error) {
         console.error(error);
         return NextResponse.json(
-            { error: 'An unexpected error occurred' },
+            { error: "An unexpected error occurred" },
             { status: 500 }
         );
     }

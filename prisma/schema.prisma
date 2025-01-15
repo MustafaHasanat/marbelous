@@ -14,13 +14,35 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  email     String   @unique
+  password  String
+}
+
+model Item {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  price       Float
+  description String
+  image       String
+  order       Order?
 }
 
 model Order {
-  id   Int    @id @default(autoincrement())
-  name String
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  name         String
+  email        String
+  phoneNumber String
+  description  String
+  city         String
+  address      String
+  item         Item?    @relation(fields: [itemId], references: [id])
+  itemId       String?  @unique
 }

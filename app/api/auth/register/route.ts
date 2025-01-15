@@ -4,14 +4,23 @@ import bcrypt from "bcrypt";
 
 export async function POST(request: Request) {
     try {
-        const { name, email, password } = await request.json();
+        const formData: FormData = await request.formData();
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const secret = formData.get("secret") as string;
+        const password = formData.get("password") as string;
+
+        if (process.env.ADMIN_SECRET !== secret)
+            return NextResponse.json(
+                { error: "Admins only entry" },
+                { status: 401 }
+            );
+
+        const hashedPassword = await bcrypt.hash(password, 12);
 
         const user = await prisma.user.create({
             data: {
-                name,
-                email,
+                name: formData.get("name") as string,
+                email: formData.get("email") as string,
                 password: hashedPassword,
             },
         });
