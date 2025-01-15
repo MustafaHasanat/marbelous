@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import type { Metadata } from "next";
 import { i18n } from "@/lib/locales/i18n.config";
 import { Locale } from "@/lib/types";

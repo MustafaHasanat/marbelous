@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
@@ -30,7 +31,6 @@ export type AxiosClientProps = {
     dispatch?: Dispatch<UnknownAction>;
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 class AxiosClient<GenericReq, GenericRes = {}> {
     endpoint: string;
     instance: AxiosInstance;

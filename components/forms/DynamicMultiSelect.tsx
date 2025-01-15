@@ -17,7 +17,6 @@ import {
 } from "@nextui-org/react";
 import { SelectItemType } from "forms";
 import { Plus } from "lucide-react";
-import { useLocale } from "@/lib/hooks";
 import { SharedText } from "../shared/SharedText";
 
 interface Props {
@@ -40,8 +39,6 @@ interface Props {
 
 export const DynamicMultiSelect: FC<Omit<SelectProps, "children"> & Props> = React.memo(
     ({ control, name, label, placeholder, options, defaultValue, modal, ...rest }) => {
-        const { t } = useLocale();
-
         return (
             <Controller
                 control={control}

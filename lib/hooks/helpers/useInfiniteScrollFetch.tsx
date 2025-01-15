@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useInView } from "./useInView";
 import { InfiniteData } from "@tanstack/react-query";
 import { ListPaginatedResponse } from "backend";
-import { useLocale } from "./useLocale";
 import { Button } from "@nextui-org/react";
 
 interface Props<DataType> {
@@ -22,7 +21,6 @@ export function useInfiniteScrollFetch<DataType>({
     type = "inViewed",
 }: Props<DataType>) {
     const [isFetchingNextPage, setIsFetchingNextPage] = useState(false);
-    const { t } = useLocale();
 
     const { ref: listRef, inViewState } = useInView<{
         list: boolean;
