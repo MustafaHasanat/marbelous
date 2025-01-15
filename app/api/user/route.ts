@@ -2,11 +2,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-interface NewUserSchema {
-    name: string;
-    email: string;
-}
-
 export async function GET() {
     try {
         const users = await prisma.user.findMany();
@@ -36,7 +31,7 @@ export async function POST(request: NextRequest) {
             data: {
                 name: formData.get("name") as string,
                 email: formData.get("email") as string,
-            } as NewUserSchema,
+            },
         });
 
         return NextResponse.json(
