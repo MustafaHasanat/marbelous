@@ -9,3 +9,6 @@ lint:
 
 acp:
 	git add . && git commit -m "feat: adding features" && git push
+
+migrate:
+	npx prisma generate
