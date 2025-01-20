@@ -1,13 +1,15 @@
 "use client";
 
 import React from "react";
-import { Button, Input, Checkbox, Link } from "@nextui-org/react";
+import { Button, Input, Link } from "@heroui/react";
 import { Eye, EyeClosed } from "lucide-react";
 import { Routs } from "@/lib/enums";
+import { useInk } from "@/ink/useInk";
 
 const RegisterPage = React.memo(() => {
     const [isVisible, setIsVisible] = React.useState(false);
     const [isConfirmVisible, setIsConfirmVisible] = React.useState(false);
+    const { ink } = useInk();
 
     const toggleVisibility = () => setIsVisible(!isVisible);
     const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
@@ -16,7 +18,7 @@ const RegisterPage = React.memo(() => {
         <div className="flex h-full w-full items-center justify-center">
             <div className="flex w-full max-w-sm flex-col gap-4 rounded-large px-8 pb-10 pt-6">
                 <p className="pb-4 text-left text-3xl font-semibold">
-                    Sign Up
+                    {ink("auth.register.welcome")}
                     <span aria-label="emoji" className="ml-2" role="img">
                         👋
                     </span>
@@ -24,19 +26,17 @@ const RegisterPage = React.memo(() => {
                 <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
                     <Input
                         isRequired
-                        label="Username"
+                        label={ink("auth.register.name")}
                         labelPlacement="outside"
                         name="username"
-                        placeholder="Enter your username"
                         type="text"
                         variant="bordered"
                     />
                     <Input
                         isRequired
-                        label="Email"
+                        label={ink("auth.register.email")}
                         labelPlacement="outside"
                         name="email"
-                        placeholder="Enter your email"
                         type="email"
                         variant="bordered"
                     />
@@ -47,10 +47,9 @@ const RegisterPage = React.memo(() => {
                                 {isVisible ? <EyeClosed /> : <Eye />}
                             </button>
                         }
-                        label="Password"
+                        label={ink("auth.register.pass")}
                         labelPlacement="outside"
                         name="password"
-                        placeholder="Enter your password"
                         type={isVisible ? "text" : "password"}
                         variant="bordered"
                     />
@@ -61,30 +60,19 @@ const RegisterPage = React.memo(() => {
                                 {isConfirmVisible ? <EyeClosed /> : <Eye />}
                             </button>
                         }
-                        label="Confirm Password"
+                        label={ink("auth.register.confirm")}
                         labelPlacement="outside"
                         name="confirmPassword"
-                        placeholder="Confirm your password"
                         type={isConfirmVisible ? "text" : "password"}
                         variant="bordered"
                     />
-                    <Checkbox isRequired className="py-4" size="sm">
-                        I agree with the&nbsp;
-                        <Link href={Routs.TERMS} size="sm">
-                            Terms
-                        </Link>
-                        &nbsp; and&nbsp;
-                        <Link href={Routs.POLICY} size="sm">
-                            Privacy Policy
-                        </Link>
-                    </Checkbox>
                     <Button color="primary" type="submit">
-                        Sign Up
+                        {ink("auth.register.btn")}
                     </Button>
                 </form>
                 <p className="text-center text-small">
                     <Link href={Routs.LOGIN} size="sm">
-                        Already have an account? Log In
+                        {ink("auth.register.old")}
                     </Link>
                 </p>
             </div>

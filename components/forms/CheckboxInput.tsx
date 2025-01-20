@@ -1,7 +1,6 @@
 "use client";
 
-import { CheckboxProps } from "@nextui-org/checkbox";
-import { Checkbox } from "@nextui-org/react";
+import { Checkbox, CheckboxProps } from "@heroui/react";
 import React, { CSSProperties } from "react";
 import { Control, Controller } from "react-hook-form";
 

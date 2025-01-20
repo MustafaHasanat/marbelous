@@ -1,12 +1,10 @@
 "use client";
 
-import { Input } from "@nextui-org/input";
-import { InputProps } from "@nextui-org/input";
 import React, { CSSProperties } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Control, Controller } from "react-hook-form";
-import { cn } from "@nextui-org/theme";
 import { useLocale } from "@/lib/hooks";
+import { cn, Input, InputProps } from "@heroui/react";
 
 interface Props {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

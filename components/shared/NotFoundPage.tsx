@@ -1,11 +1,10 @@
 "use client"; // Error boundaries must be Client Components
 
 import { SharedImage, SharedText } from "@/components";
-import { Button } from "@nextui-org/button";
 import Logo from "@/public/icons/logo.png";
 import { useLocale, useSuperRouter } from "@/lib/hooks";
 import { Routs } from "@/lib/enums";
-import { Divider } from "@nextui-org/react";
+import { Button, Divider } from "@heroui/react";
 import React from "react";
 
 export default function NotFoundPage() {

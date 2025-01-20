@@ -1,9 +1,8 @@
 "use client";
 
 import { useLocale } from "@/lib/hooks";
-import { Input } from "@nextui-org/input";
-import { InputProps } from "@nextui-org/input";
-import { cn, SlotsToClasses } from "@nextui-org/theme";
+import { Input, InputProps } from "@heroui/react";
+import { cn, SlotsToClasses } from "@heroui/theme";
 import React, { CSSProperties } from "react";
 import { Control, Controller } from "react-hook-form";
 

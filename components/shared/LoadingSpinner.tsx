@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale } from "@/lib/hooks";
-import { cn, Spinner, SpinnerProps } from "@nextui-org/react";
+import { cn, Spinner, SpinnerProps } from "@heroui/react";
 import React, { useMemo } from "react";
 
 interface Props {

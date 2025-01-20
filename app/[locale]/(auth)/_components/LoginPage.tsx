@@ -2,11 +2,13 @@
 
 import React from "react";
 import { Eye, EyeClosed } from "lucide-react";
-import { Button, Input, Checkbox, Link, Form } from "@nextui-org/react";
+import { Button, Input, Link, Form } from "@heroui/react";
 import { Routs } from "@/lib/enums";
+import { useInk } from "@/ink/useInk";
 
 const LoginPage = React.memo(() => {
     const [isVisible, setIsVisible] = React.useState(false);
+    const { ink } = useInk();
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -19,7 +21,8 @@ const LoginPage = React.memo(() => {
         <div className="flex h-full w-full items-center justify-center">
             <div className="flex w-full max-w-sm flex-col gap-4 rounded-large px-8 pb-10 pt-6">
                 <p className="pb-4 text-left text-3xl font-semibold">
-                    Log In
+                    {ink("auth.login.welcome")}
+
                     <span aria-label="emoji" className="ml-2" role="img">
                         👋
                     </span>
@@ -31,10 +34,9 @@ const LoginPage = React.memo(() => {
                 >
                     <Input
                         isRequired
-                        label="Email"
+                        label={ink("auth.login.email")}
                         labelPlacement="outside"
                         name="email"
-                        placeholder="Enter your email"
                         type="email"
                         variant="bordered"
                     />
@@ -45,28 +47,19 @@ const LoginPage = React.memo(() => {
                                 {isVisible ? <EyeClosed /> : <Eye />}
                             </button>
                         }
-                        label="Password"
+                        label={ink("auth.login.pass")}
                         labelPlacement="outside"
                         name="password"
-                        placeholder="Enter your password"
                         type={isVisible ? "text" : "password"}
                         variant="bordered"
                     />
-                    <div className="flex w-full items-center justify-between px-1 py-2">
-                        <Checkbox defaultSelected name="remember" size="sm">
-                            Remember me
-                        </Checkbox>
-                        <Link className="text-default-500" href="#" size="sm">
-                            Forgot password?
-                        </Link>
-                    </div>
                     <Button className="w-full" color="primary" type="submit">
-                        Log In
+                        {ink("auth.login.btn")}
                     </Button>
                 </Form>
                 <p className="text-center text-small">
                     <Link href={Routs.REGISTER} size="sm">
-                        Create an account
+                        {ink("auth.login.new")}
                     </Link>
                 </p>
             </div>

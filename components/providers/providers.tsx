@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
 import TanStackProvider from "./TanStackProvider";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 import ReduxProvider from "./ReduxProvider";
 import { Session } from "next-auth";
-import { useUserAgent } from "@/lib/hooks";
+import { useLocale, useUserAgent } from "@/lib/hooks";
+import { InkProvider } from "@/ink/InkProvider";
 
 export function Providers({
     children,
@@ -18,17 +19,31 @@ export function Providers({
     userAgent: string | null;
 }) {
     useUserAgent({ userAgent });
+    const { locale } = useLocale();
 
     return (
-        <NextUIProvider>
+        <HeroUIProvider>
             <ReduxProvider>
                 <SessionProvider>
                     <TanStackProvider>
-                        <Toaster richColors closeButton />
-                        {children}
+                        <InkProvider
+                            config={{
+                                backendUrl: "https://jsontest-59qpe.ondigitalocean.app/",
+                                locale,
+                                endpoints: {
+                                    getOne: "trans/mymodels/4",
+                                    create: "trans/mymodels/",
+                                    update: "trans/mymodels/4",
+                                    delete: "trans/mymodels/4",
+                                },
+                            }}
+                        >
+                            <Toaster richColors closeButton />
+                            {children}
+                        </InkProvider>
                     </TanStackProvider>
                 </SessionProvider>
             </ReduxProvider>
-        </NextUIProvider>
+        </HeroUIProvider>
     );
 }

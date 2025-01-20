@@ -3,7 +3,7 @@
 import { CSSProperties, useEffect, useState } from "react";
 import Image from "next/image";
 import placeholderImage from "@/public/images/image-placeholder.png";
-import { cn } from "@nextui-org/theme";
+import { cn } from "@heroui/theme";
 
 interface Props {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

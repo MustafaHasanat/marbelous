@@ -1,7 +1,7 @@
 "use client";
 
 import React, { CSSProperties } from "react";
-import { RadioGroup, Radio, cn, SlotsToClasses } from "@nextui-org/react";
+import { RadioGroup, Radio, cn, SlotsToClasses } from "@heroui/react";
 import { Control, Controller } from "react-hook-form";
 import { RadioItemType } from "forms";
 import { SharedText } from "../shared/SharedText";

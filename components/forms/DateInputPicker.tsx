@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 "use client";
 
-import { DatePicker, DatePickerProps } from "@nextui-org/react";
-import { cn, SlotsToClasses } from "@nextui-org/theme";
+import { cn, DatePicker, DatePickerProps, SlotsToClasses } from "@heroui/react";
 import React, { CSSProperties } from "react";
 import { Control, Controller } from "react-hook-form";
 import { parseDate } from "@internationalized/date";

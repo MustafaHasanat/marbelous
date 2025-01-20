@@ -1,12 +1,11 @@
 "use client"; // Error boundaries must be Client Components
 
 import { SharedImage, SharedText } from "@/components";
-import { Button } from "@nextui-org/button";
 import { useEffect, useState } from "react";
 import Logo from "@/public/icons/logo.png";
 import { useLocale, useSuperRouter } from "@/lib/hooks";
 import { Routs } from "@/lib/enums";
-import { cn, Divider } from "@nextui-org/react";
+import { Button, cn, Divider } from "@heroui/react";
 
 export default function Error({
     error,

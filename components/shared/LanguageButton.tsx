@@ -4,8 +4,7 @@
 import React from "react";
 import { useLocale } from "@/lib/hooks";
 import { SharedText } from "./SharedText";
-import { cn } from "@nextui-org/theme";
-import { Button } from "@nextui-org/react";
+import { Button, cn } from "@heroui/react";
 
 interface Props {
     className?: string;

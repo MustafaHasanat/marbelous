@@ -1,12 +1,12 @@
 "use client";
 
-import { cn } from "@nextui-org/theme";
 import { ReactNode } from "react";
 import { Routs } from "@/lib/enums";
 import { useSuperRouter } from "@/lib/hooks";
 import { SharedText } from "./SharedText";
 import React from "react";
 import { SuperNavigatorType } from "@/lib/hooks/helpers/useSuperRouter";
+import { cn } from "@heroui/theme";
 
 interface Props {
     href: Routs;

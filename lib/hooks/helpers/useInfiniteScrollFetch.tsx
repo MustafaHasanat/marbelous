@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useInView } from "./useInView";
 import { InfiniteData } from "@tanstack/react-query";
 import { ListPaginatedResponse } from "backend";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 
 interface Props<DataType> {
     fetchNextPage: any;

@@ -14,7 +14,7 @@ import {
     Select,
     SelectItem,
     SelectProps,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { SelectItemType } from "forms";
 import { Plus } from "lucide-react";
 import { SharedText } from "../shared/SharedText";

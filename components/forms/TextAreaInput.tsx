@@ -1,8 +1,6 @@
 "use client";
 
-import { TextAreaProps } from "@nextui-org/input";
-import { Textarea } from "@nextui-org/react";
-import { cn, SlotsToClasses } from "@nextui-org/theme";
+import { cn, SlotsToClasses, Textarea, TextAreaProps } from "@heroui/react";
 import React, { CSSProperties } from "react";
 import { Control, Controller } from "react-hook-form";
 
