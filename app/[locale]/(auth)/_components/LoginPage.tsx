@@ -27,6 +27,7 @@ const LoginPage = React.memo(() => {
                         👋
                     </span>
                 </p>
+
                 <Form
                     className="flex flex-col gap-4"
                     validationBehavior="native"
@@ -57,6 +58,7 @@ const LoginPage = React.memo(() => {
                         {ink("auth.login.btn")}
                     </Button>
                 </Form>
+
                 <p className="text-center text-small">
                     <Link href={Routs.REGISTER} size="sm">
                         {ink("auth.login.new")}

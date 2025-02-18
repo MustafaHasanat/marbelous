@@ -45,6 +45,9 @@ const config: Config = {
                         overlay: {
                             DEFAULT: "#dddddd",
                         },
+                        background: {
+                            DEFAULT: "#f5f5f5",
+                        },
                     },
                 },
             },

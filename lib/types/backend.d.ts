@@ -20,8 +20,6 @@ declare module "backend" {
         data: TGeneric<T>;
         status: TGeneric<boolean>;
         error?: TGeneric<string>;
-        detail?: TGeneric<string>;
-        code?: TGeneric<string>;
     };
 
     type PaginationParams = {

@@ -7,8 +7,8 @@ import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 import ReduxProvider from "./ReduxProvider";
 import { Session } from "next-auth";
-import { useLocale, useUserAgent } from "@/lib/hooks";
-import { InkProvider } from "@/ink/InkProvider";
+import { useUserAgent } from "@/lib/hooks";
+import LocalInkProvider from "./LocalInkProvider";
 
 export function Providers({
     children,
@@ -19,28 +19,16 @@ export function Providers({
     userAgent: string | null;
 }) {
     useUserAgent({ userAgent });
-    const { locale } = useLocale();
 
     return (
         <HeroUIProvider>
             <ReduxProvider>
                 <SessionProvider>
                     <TanStackProvider>
-                        <InkProvider
-                            config={{
-                                backendUrl: "https://jsontest-59qpe.ondigitalocean.app/",
-                                locale,
-                                endpoints: {
-                                    getOne: "trans/mymodels/4",
-                                    create: "trans/mymodels/",
-                                    update: "trans/mymodels/4",
-                                    delete: "trans/mymodels/4",
-                                },
-                            }}
-                        >
+                        <LocalInkProvider>
                             <Toaster richColors closeButton />
                             {children}
-                        </InkProvider>
+                        </LocalInkProvider>
                     </TanStackProvider>
                 </SessionProvider>
             </ReduxProvider>

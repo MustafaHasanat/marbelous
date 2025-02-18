@@ -33,7 +33,7 @@ export default async function RootLayout({
     const headersList = headers();
 
     return (
-        <html lang={locale} className="dark">
+        <html lang={locale} className="light">
             <body
                 style={{
                     direction: locale === "en" ? "ltr" : "rtl",
