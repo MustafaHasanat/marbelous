@@ -1,13 +1,12 @@
+"use client";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import LoginPage from "@/app/[locale]/(auth)/_components/LoginPage";
 import RegisterPage from "@/app/[locale]/(auth)/_components/RegisterPage";
-import { InkProvider } from "@/ink/InkProvider";
-import { InkProviderComponents } from "@/ink/types";
 import { BACKEND_BASE } from "@/lib/constants";
-import { useLocale } from "@/lib/hooks";
+import { InkProvider, InkProviderComponents } from "@kaiserleap/ink/react-ink";
 
-const LocalInkProvider = ({ children }: { children: React.ReactNode }) => {
-    const { locale } = useLocale();
-
+const LocalInkProvider = ({ children }: { children: JSX.Element }) => {
     const components: InkProviderComponents = {
         loginPage: {
             label: "Login",
@@ -23,7 +22,7 @@ const LocalInkProvider = ({ children }: { children: React.ReactNode }) => {
         <InkProvider
             config={{
                 backendUrl: BACKEND_BASE,
-                locale,
+                locales: ["en", "ar"],
                 endpoints: {
                     getOne: "ink",
                     create: "",

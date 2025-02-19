@@ -4,7 +4,7 @@ import React from "react";
 import { Button, Input, Link } from "@heroui/react";
 import { Eye, EyeClosed } from "lucide-react";
 import { Routs } from "@/lib/enums";
-import { useInk } from "@/ink/useInk";
+import { useInk } from "@kaiserleap/ink/react-ink";
 
 const RegisterPage = React.memo(() => {
     const [isVisible, setIsVisible] = React.useState(false);

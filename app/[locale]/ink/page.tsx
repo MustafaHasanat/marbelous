@@ -1,12 +1,8 @@
 import React from "react";
-import { LoadingSpinner } from "@/components";
-import dynamic from "next/dynamic";
-
-
-const InkBrush = dynamic(() => import("@/ink/InkBrush"), {
-    loading: () => <LoadingSpinner />,
-});
+// import { InkBrush } from "@kaiserleap/ink/react-ink";
+import LocalizationEditor from "./_components/LocalizationEditor";
 
 export default async function Page() {
-    return <InkBrush />;
+    // return <InkBrush />;
+    return <LocalizationEditor />;
 }
