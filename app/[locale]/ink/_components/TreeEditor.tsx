@@ -1,13 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useFormik } from "formik";
-import React from "react";
-import TreeNode from "./TreeNode";
-
-export type LocaleNode = {
-    [key: string]: string | LocaleNode;
-};
+import React, { FormEvent } from "react";
+import { useTreeNode } from "./useTreeNode";
 
 const TreeEditor = () => {
     const objectData = {
@@ -31,27 +25,32 @@ const TreeEditor = () => {
         },
     };
 
-    const onSubmit = (data: LocaleNode) => {
-        console.log("Updated Data:", data);
-    };
-
-    const formik = useFormik({
-        initialValues: objectData,
-        onSubmit: (values) => onSubmit(values),
+    const { TreeNode, subTree } = useTreeNode({
+        node: objectData,
+        identifier: null,
+        path: [],
+        locales: ["en", "ar"],
     });
 
-    return (
-        <form onSubmit={formik.handleSubmit} className="p-4">
-            <TreeNode
-                node={objectData}
-                path={[]}
-                identifier={null}
-                formik={{ values: formik?.values, handleChange: formik?.handleChange }}
-            />
+    const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log(typeof subTree === "object" && subTree["root"]);
+    };
 
-            <button type="submit" className="mt-4 bg-blue-500 text-black p-2 rounded">
-                Save
+    return (
+        <form onSubmit={onSubmit} className="grid grid-cols-2 p-8 gap-6">
+            <h1 className="text-2xl font-bold me-auto">Inter-localization Tree Editor</h1>
+
+            <button
+                type="submit"
+                className="bg-primary text-white font-bold p-2 rounded-xl px-4 w-fit ms-auto"
+            >
+                Save Changes
             </button>
+
+            <div className="w-full col-span-2 h-full max-h-[75vh] border p-2 rounded-xl">
+                <div className="w-full col-span-2 h-full overflow-scroll">{TreeNode}</div>
+            </div>
         </form>
     );
 };
