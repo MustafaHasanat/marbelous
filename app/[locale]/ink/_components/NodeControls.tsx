@@ -5,57 +5,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { Dispatch, useMemo } from "react";
-import { LocaleNode, useTreeNode } from "./useTreeNode";
+import React, { Dispatch } from "react";
 import { Grid2x2Plus, Languages, Trash2 } from "lucide-react";
-import { createRoot } from "react-dom/client";
+import { NodeActionProps } from "./TreeEditor";
 
 interface Params {
     type: "node" | "leaf";
     fieldPath: string;
     identifier: string | null;
-    node: LocaleNode;
     setIsExist: Dispatch<React.SetStateAction<boolean>>;
+    handleNodeAction: (props: NodeActionProps) => void;
 }
 
-const NodeControls = React.memo(({ type, fieldPath, identifier, node, setIsExist }: Params) => {
-    const isDeletable = useMemo(() => {
-        return typeof node === "object";
-    }, [node]);
+const NodeControls = React.memo(
+    ({ type, fieldPath, identifier, handleNodeAction }: Params) => {
+        // const handleDelete = () => {
+        //     setIsExist(false);
 
-    const { TreeNode } = useTreeNode({
-        node: {},
-        identifier: "x123",
-        path: fieldPath?.split("."),
-        locales: ["en", "ar"],
-    });
+        //     const element = document.getElementById(fieldPath);
+        //     element && element?.remove();
+        // };
 
-    const handleDelete = () => {
-        setIsExist(false);
-
-        const element = document.getElementById(fieldPath);
-        element && element?.remove();
-    };
-
-    const handleAddParent = () => {
-        const targetElement = document.getElementById(fieldPath);
-        if (!targetElement) return;
-
-        const container = document.createElement("div");
-        container.setAttribute("id", [fieldPath, "x123"].join("."));
-        targetElement.appendChild(container);
-
-        const root = createRoot(container);
-        root.render(TreeNode);
-    };
-
-    if (!identifier) return;
-
-    return (
-        <>
-            {type === "node" && (
-                <>
-                    {isDeletable && (
+        return (
+            <>
+                {type === "node" && identifier && (
+                    <>
                         <Trash2
                             size={15}
                             color="crimson"
@@ -63,19 +37,34 @@ const NodeControls = React.memo(({ type, fieldPath, identifier, node, setIsExist
                                 cursor: "pointer",
                                 transition: "0.3s ease",
                             }}
-                            onClick={handleDelete}
+                            onClick={() =>
+                                handleNodeAction({
+                                    path: fieldPath,
+                                    type: "node",
+                                    action: "remove",
+                                })
+                            }
                         />
-                    )}
 
-                    <Languages
-                        size={15}
-                        color="indigo"
-                        style={{
-                            cursor: "pointer",
-                            transition: "0.3s ease",
-                        }}
-                    />
+                        <Languages
+                            size={15}
+                            color="indigo"
+                            style={{
+                                cursor: "pointer",
+                                transition: "0.3s ease",
+                            }}
+                            onClick={() =>
+                                handleNodeAction({
+                                    path: fieldPath,
+                                    type: "leaf",
+                                    action: "append",
+                                })
+                            }
+                        />
+                    </>
+                )}
 
+                {type === "node" && (
                     <Grid2x2Plus
                         size={15}
                         color="green"
@@ -83,14 +72,20 @@ const NodeControls = React.memo(({ type, fieldPath, identifier, node, setIsExist
                             cursor: "pointer",
                             transition: "0.3s ease",
                         }}
-                        onClick={handleAddParent}
+                        onClick={() =>
+                            handleNodeAction({
+                                path: fieldPath || "",
+                                type: "node",
+                                action: "append",
+                            })
+                        }
                     />
-                </>
-            )}
+                )}
 
-            <p className="text-[12px] opacity-60 hover:opacity-100">{fieldPath}</p>
-        </>
-    );
-});
+                <p className="text-[12px] opacity-60 hover:opacity-100">{fieldPath}</p>
+            </>
+        );
+    },
+);
 
 export default NodeControls;

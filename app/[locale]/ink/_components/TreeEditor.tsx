@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { useTreeNode } from "./useTreeNode";
 
+export type NodeActionProps = { path: string; type: "node" | "leaf"; action: "append" | "remove" };
+
 const TreeEditor = () => {
-    const objectData = {
+    const [objectData, setObjectData] = useState({
         auth: {
             login: {
                 welcome: { en: "Welcome", ar: "مرحبا" },
@@ -23,6 +26,19 @@ const TreeEditor = () => {
                 old: { en: "Login", ar: "سجل الدخول" },
             },
         },
+    });
+
+    const handleNodeAction = ({ path, type, action }: NodeActionProps) => {
+        if (action === "remove") {
+            setObjectData((preObj) => {
+                const newObj = path.split(".").reduce((acc, curr) => {
+                    if (curr && acc[curr]) return acc[curr];
+                    return acc
+                }, preObj as any);
+
+                return newObj;
+            });
+        }
     };
 
     const { TreeNode, subTree } = useTreeNode({
@@ -30,6 +46,7 @@ const TreeEditor = () => {
         identifier: null,
         path: [],
         locales: ["en", "ar"],
+        handleNodeAction,
     });
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -48,7 +65,7 @@ const TreeEditor = () => {
                 Save Changes
             </button>
 
-            <div className="w-full col-span-2 h-full max-h-[75vh] border p-2 rounded-xl">
+            <div className="w-full col-span-2 h-full max-h-[75vh] border px-2 py-5 rounded-xl">
                 <div className="w-full col-span-2 h-full overflow-scroll">{TreeNode}</div>
             </div>
         </form>

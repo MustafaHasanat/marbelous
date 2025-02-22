@@ -7,6 +7,7 @@
 import { ReactNode, useState } from "react";
 import React from "react";
 import NodeElement from "./NodeElement";
+import { NodeActionProps } from "./TreeEditor";
 
 export type LocaleNode =
     | string
@@ -19,6 +20,7 @@ interface Props {
     identifier: string | null;
     path: string[];
     locales: string[];
+    handleNodeAction: (props: NodeActionProps) => void;
 }
 
 export const useTreeNode = ({
@@ -26,6 +28,7 @@ export const useTreeNode = ({
     identifier = null,
     path,
     locales,
+    handleNodeAction,
 }: Props): {
     TreeNode: JSX.Element;
     subTree: LocaleNode;
@@ -53,6 +56,7 @@ export const useTreeNode = ({
                 node: subNode,
                 path: currentPath,
                 locales,
+                handleNodeAction,
             });
 
             if (typeof subTree === "object" && subTree !== null) {
@@ -71,10 +75,10 @@ export const useTreeNode = ({
                 localTreeNodes={localTreeNodes}
                 fieldPath={fieldPath}
                 identifier={identifier}
-                node={node}
                 setIsExist={setIsExist}
                 setValue={setValue}
                 value={value}
+                handleNodeAction={handleNodeAction}
             />
         ),
         subTree: typeof node === "object" ? (isExist ? { [value]: localSubTree } : {}) : value,

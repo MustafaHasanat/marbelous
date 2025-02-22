@@ -6,41 +6,35 @@ import NodeWrapper from "./NodeWrapper";
 import { Play } from "lucide-react";
 import NodeInput from "./NodeInput";
 import NodeControls from "./NodeControls";
-import { LocaleNode } from "./useTreeNode";
+import { NodeActionProps } from "./TreeEditor";
 
 interface Params {
     fieldPath: string;
     identifier: string | null;
-    node: LocaleNode;
     value: string;
     type: "node" | "leaf";
     localTreeNodes: ReactNode[];
     setValue: Dispatch<React.SetStateAction<string>>;
     setIsExist: Dispatch<React.SetStateAction<boolean>>;
+    handleNodeAction: (props: NodeActionProps) => void;
 }
 
 const NodeElement = ({
     fieldPath,
     identifier,
-    node,
     type,
     setValue,
     localTreeNodes,
     setIsExist,
     value,
+    handleNodeAction,
 }: Params) => {
     const uniqueId = useId();
     const [isOpen, setIsOpen] = useState<boolean>(type === "node");
 
     return (
         <NodeWrapper key={uniqueId} id={fieldPath}>
-            <div
-                className={
-                    type === "node"
-                        ? "flex items-center gap-2"
-                        : "flex items-center gap-1 ml-4 pl-4"
-                }
-            >
+            <div className={"flex items-center gap-2"}>
                 {type === "node" ? (
                     <>
                         <Play
@@ -55,20 +49,18 @@ const NodeElement = ({
                         />
 
                         {identifier ? (
-                            <>
-                                <NodeInput setValue={setValue} value={value} />
-
-                                <NodeControls
-                                    type={type}
-                                    fieldPath={fieldPath}
-                                    identifier={identifier}
-                                    node={node}
-                                    setIsExist={setIsExist}
-                                />
-                            </>
+                            <NodeInput setValue={setValue} value={value} />
                         ) : (
                             <p className="font-bold">Root</p>
                         )}
+
+                        <NodeControls
+                            type={type}
+                            fieldPath={fieldPath}
+                            identifier={identifier}
+                            setIsExist={setIsExist}
+                            handleNodeAction={handleNodeAction}
+                        />
                     </>
                 ) : (
                     <>
@@ -80,11 +72,11 @@ const NodeElement = ({
                         <NodeInput setValue={setValue} value={value} />
 
                         <NodeControls
-                            type="leaf"
+                            type={type}
                             fieldPath={fieldPath}
                             identifier={identifier}
                             setIsExist={setIsExist}
-                            node={node}
+                            handleNodeAction={handleNodeAction}
                         />
                     </>
                 )}

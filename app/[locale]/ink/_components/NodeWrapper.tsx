@@ -9,7 +9,7 @@ interface Params {
 
 const NodeWrapper = React.memo(({ id, children }: Params) => {
     return (
-        <div id={id} className="flex flex-col gap-3 ml-4 pl-4">
+        <div id={id} className="flex flex-col gap-3 ml-8">
             {children}
         </div>
     );
