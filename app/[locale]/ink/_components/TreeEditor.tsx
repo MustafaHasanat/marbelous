@@ -2,9 +2,16 @@
 "use client";
 
 import React, { FormEvent, useState } from "react";
-import { useTreeNode } from "./useTreeNode";
+import TreeNode from "./TreeNode";
+import { treeHandler } from "./treeHandler";
 
-export type NodeActionProps = { path: string; type: "node" | "leaf"; action: "append" | "remove" };
+export type NodeActionProps = {
+    path: string;
+    action: "append-node" | "append-leaf" | "remove" | "change";
+    value: string;
+};
+
+export type LocaleNode = string | { [key: string]: LocaleNode };
 
 const TreeEditor = () => {
     const [objectData, setObjectData] = useState({
@@ -28,30 +35,23 @@ const TreeEditor = () => {
         },
     });
 
-    const handleNodeAction = ({ path, type, action }: NodeActionProps) => {
-        if (action === "remove") {
-            setObjectData((preObj) => {
-                const newObj = path.split(".").reduce((acc, curr) => {
-                    if (curr && acc[curr]) return acc[curr];
-                    return acc
-                }, preObj as any);
-
-                return newObj;
-            });
-        }
+    const handleNodeAction = ({ action, path, value }: NodeActionProps) => {
+        setObjectData(
+            treeHandler<typeof objectData>({
+                node: objectData,
+                splittedPath: path !== "" ? path?.split(".") : [],
+                action,
+                identifier: null,
+                pathFlag: 0,
+                value,
+                locales: ["en", "ar"],
+            }),
+        );
     };
-
-    const { TreeNode, subTree } = useTreeNode({
-        node: objectData,
-        identifier: null,
-        path: [],
-        locales: ["en", "ar"],
-        handleNodeAction,
-    });
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(typeof subTree === "object" && subTree["root"]);
+        console.log(objectData);
     };
 
     return (
@@ -65,8 +65,17 @@ const TreeEditor = () => {
                 Save Changes
             </button>
 
-            <div className="w-full col-span-2 h-full max-h-[75vh] border px-2 py-5 rounded-xl">
-                <div className="w-full col-span-2 h-full overflow-scroll">{TreeNode}</div>
+            <div className="w-full col-span-2 h-full min-h-[50vh] max-h-[75vh] border px-2 py-5 rounded-xl">
+                <div className="w-full col-span-2 h-full overflow-scroll">
+                    <TreeNode
+                        node={objectData}
+                        identifier={null}
+                        path={[]}
+                        locales={["en", "ar"]}
+                        handleNodeAction={handleNodeAction}
+                        isLocaleContainer={false}
+                    />
+                </div>
             </div>
         </form>
     );

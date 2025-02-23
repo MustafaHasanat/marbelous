@@ -1,112 +1,185 @@
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { Play } from "lucide-react";
-import React, { useState } from "react";
-
-export type LocaleNode =
-    | string
-    | {
-          [key: string]: string | LocaleNode;
-      };
+import { Grid2x2Plus, Languages, Pencil, Play, Trash2 } from "lucide-react";
+import { useId, useMemo, useState } from "react";
+import React from "react";
+import { NodeActionProps } from "./TreeEditor";
+import { LocaleNode } from "./TreeEditor";
 
 interface Props {
-    node: LocaleNode;
     identifier: string | null;
+    handleNodeAction: (props: NodeActionProps) => void;
+    node: LocaleNode;
     path: string[];
-    formik: { values: any; handleChange: any; setValues: any; setFieldValue: any };
+    locales: string[];
+    isLocaleContainer: boolean;
 }
 
-const TreeNode = ({ node, formik, path = [], identifier = null }: Props) => {
+const TreeNode = ({
+    handleNodeAction,
+    node,
+    identifier = null,
+    path,
+    locales,
+    isLocaleContainer,
+}: Props) => {
+    const uniqueId = useId();
     const [isOpen, setIsOpen] = useState<boolean>(true);
-    const [localIdentifier, setLocalIdentifier] = useState<string | null>(identifier);
 
-    const currentPath = [...path, ...(localIdentifier ? [localIdentifier] : [])];
-    const fieldName = currentPath.join(".");
+    const [value, setValue] = useState(
+        identifier !== null
+            ? typeof node === "object"
+                ? identifier // Key for object nodes
+                : typeof node === "string"
+                ? node // Value for leaf nodes
+                : ""
+            : "root",
+    );
 
-    const handleKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newKey = event.target.value.trim();
+    const { currentPath, fieldPath } = useMemo(() => {
+        const currentPath = [...path, ...(identifier ? [identifier] : [])];
+        return {
+            currentPath,
+            fieldPath: currentPath.join("."),
+        };
+    }, [path, identifier]);
 
-        if (!newKey || !localIdentifier) return;
-
-        // const parts = localIdentifier.split(".");
-        // const newIdentifier = parts.slice(0, parts.length - 2);
-
-        const updatedValues = structuredClone(formik.values);
-
-        updatedValues[newKey] = updatedValues[localIdentifier];
-        delete updatedValues[localIdentifier];
-        setLocalIdentifier(newKey);
-
-        formik.setValues(updatedValues);
-    };
-
-    const getNode = () => {
-        if (!localIdentifier) return null;
-
-        //* render the node that contains the key input
-        if (typeof node === "object")
-            return (
-                <div className="flex items-center gap-2">
+    return (
+        <div key={uniqueId} id={fieldPath} className="flex flex-col gap-3 ml-8">
+            <div className={"flex items-center gap-2"}>
+                {typeof node === "object" ? (
                     <Play
                         size={15}
-                        fill="black"
+                        fill="lightGray"
                         onClick={() => setIsOpen((prev) => !prev)}
+                        className="min-w-[13px] min-h-[13px]"
                         style={{
                             cursor: "pointer",
                             transform: isOpen ? "rotate(90deg)" : "rotate(0deg)",
                             transition: "0.3s ease",
                         }}
                     />
-
-                    <input
-                        type="text"
-                        className="border p-1 text-sm"
-                        name={fieldName}
-                        value={localIdentifier}
-                        onChange={handleKeyChange}
-                    />
-                </div>
-            );
-
-        //* render the leaf that contains the language input
-        if (typeof node === "string")
-            return (
-                <div className="flex items-center gap-1 ml-4 pl-4">
+                ) : (
                     <label className="font-bold w-6">
-                        {`${localIdentifier?.charAt(0)?.toUpperCase()}${localIdentifier?.slice(1)}`}
+                        {identifier?.charAt(0)?.toUpperCase()}
+                        {identifier?.slice(1)}
                     </label>
-                    <input
-                        type="text"
-                        className="border p-1 text-sm"
-                        name={fieldName}
-                        value={(formik.values as any)[fieldName]}
-                        defaultValue={node}
-                        onChange={formik.handleChange}
+                )}
+
+                {identifier ? (
+                    <>
+                        <input
+                            type="text"
+                            className="border p-1 text-sm rounded-md"
+                            value={value}
+                            readOnly
+                            onChange={(e) => {
+                                setValue(e.target.value);
+
+                                handleNodeAction({
+                                    path: fieldPath || "",
+                                    action: "change",
+                                    value: e.target.value,
+                                });
+                            }}
+                        />
+
+                        <Pencil
+                            size={15}
+                            color="blue"
+                            style={{
+                                cursor: "pointer",
+                                transition: "0.3s ease",
+                            }}
+                            className="min-w-[13px] min-h-[13px]"
+                        />
+                    </>
+                ) : (
+                    <p className="font-bold">Root</p>
+                )}
+
+                {typeof node === "object" && identifier && (
+                    <>
+                        <Trash2
+                            size={15}
+                            color="crimson"
+                            className="min-w-[13px] min-h-[13px]"
+                            style={{
+                                cursor: "pointer",
+                                transition: "0.3s ease",
+                            }}
+                            onClick={() =>
+                                handleNodeAction({
+                                    path: fieldPath,
+                                    action: "remove",
+                                    value: value,
+                                })
+                            }
+                        />
+
+                        {!isLocaleContainer && Object.keys(node).length === 0 && (
+                            <Languages
+                                size={15}
+                                color="indigo"
+                                className="min-w-[13px] min-h-[13px]"
+                                style={{
+                                    cursor: "pointer",
+                                    transition: "0.3s ease",
+                                }}
+                                onClick={() =>
+                                    handleNodeAction({
+                                        path: fieldPath,
+                                        action: "append-leaf",
+                                        value: value,
+                                    })
+                                }
+                            />
+                        )}
+                    </>
+                )}
+
+                {typeof node === "object" && !isLocaleContainer && (
+                    <Grid2x2Plus
+                        size={15}
+                        color="green"
+                        className="min-w-[13px] min-h-[13px]"
+                        style={{
+                            cursor: "pointer",
+                            transition: "0.3s ease",
+                        }}
+                        onClick={() =>
+                            handleNodeAction({
+                                path: fieldPath || "",
+                                action: "append-node",
+                                value: value,
+                            })
+                        }
                     />
-                </div>
-            );
+                )}
 
-        return null;
-    };
+                <p className="text-[12px] opacity-60 hover:opacity-100">{fieldPath}</p>
+            </div>
 
-    return (
-        <div className="flex flex-col gap-3 ml-4 pl-4">
-            {/* render the node */}
-            {getNode()}
+            {isOpen &&
+                typeof node === "object" &&
+                Object.entries(node).map(([subIdentifier, subNode]) => {
+                    const nodeKeys = Object.keys(subNode);
+                    const isLocaleContainer: boolean =
+                        nodeKeys.length === locales.length &&
+                        nodeKeys.filter((key) => locales.includes(key?.toLowerCase())).length > 0;
 
-            {/* recursively render new nodes from the children of the current one */}
-            {typeof node === "object" &&
-                Object.entries(node).map(([subIdentifier, subNode], index) => (
-                    <TreeNode
-                        key={subIdentifier + index}
-                        node={subNode}
-                        path={currentPath}
-                        formik={formik}
-                        identifier={subIdentifier}
-                    />
-                ))}
+                    return (
+                        <TreeNode
+                            key={subIdentifier}
+                            identifier={subIdentifier}
+                            node={subNode}
+                            handleNodeAction={handleNodeAction}
+                            locales={locales}
+                            path={currentPath}
+                            isLocaleContainer={isLocaleContainer}
+                        />
+                    );
+                })}
         </div>
     );
 };
