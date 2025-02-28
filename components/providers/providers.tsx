@@ -24,12 +24,12 @@ export function Providers({
         <HeroUIProvider>
             <ReduxProvider>
                 <SessionProvider>
-                    <TanStackProvider>
-                        <LocalInkProvider>
+                    <LocalInkProvider>
+                        <TanStackProvider>
                             <Toaster richColors closeButton />
                             {children}
-                        </LocalInkProvider>
-                    </TanStackProvider>
+                        </TanStackProvider>
+                    </LocalInkProvider>
                 </SessionProvider>
             </ReduxProvider>
         </HeroUIProvider>

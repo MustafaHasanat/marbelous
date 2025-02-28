@@ -14,7 +14,6 @@ const LoginPage = React.memo(() => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("handleSubmit");
     };
 
     return (

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { verifyToken } from "@/lib/configs/jwt";
 import { NextRequest } from "next/server";
 

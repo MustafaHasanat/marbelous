@@ -1,8 +1,6 @@
 import React from "react";
-// import { InkBrush } from "@kaiserleap/ink/react-ink";
-import TreeEditor from "./_components/TreeEditor";
+import { InkBrushPage } from "@kaiserleap/ink/react-ink";
 
 export default async function Page() {
-    // return <InkBrush />;
-    return <TreeEditor />;
+    return <InkBrushPage />;
 }
