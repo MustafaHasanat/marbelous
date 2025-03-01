@@ -34,6 +34,20 @@ input[type="radio"] {
   height: 18px;
 }
 
+@keyframes rotateVertical {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+#hero-logo {
+  animation: rotateVertical 3s ease-out infinite;
+  transform-style: preserve-3d;
+}
+
 @media (prefers-color-scheme: light) {
   html {
     color-scheme: light;

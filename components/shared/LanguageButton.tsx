@@ -21,7 +21,7 @@ export const LanguageButton = React.memo(({ className }: Props) => {
             color="primary"
             onPress={() => toggleLocale()}
             startContent={
-                <SharedText className="w-full">{locale === "ar" ? "En" : "ع"}</SharedText>
+                <SharedText className="w-full font-bold">{locale === "ar" ? "En" : "ع"}</SharedText>
             }
         />
     );

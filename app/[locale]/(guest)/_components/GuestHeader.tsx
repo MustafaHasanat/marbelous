@@ -1,42 +1,57 @@
 "use client";
 
-import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
 import React from "react";
 import Logo from "@/public/images/marbelous-logo.png";
 import Image from "next/image";
-import { SharedText } from "@/components";
+import { LanguageButton, MakeOrderButton, SharedText } from "@/components";
+import { useLocale, useSuperRouter, useWindowSize } from "@/lib/hooks";
+import { Routs } from "@/lib/enums";
 
 const GuestHeader = React.memo(() => {
+    const { t } = useLocale();
+    const { currentScreen } = useWindowSize();
+    const { navigate } = useSuperRouter();
+
     return (
-        <header className="h-[70px] overflow-hidden py-2">
-            <Navbar isBordered className="h-full flex items-center">
-                <NavbarBrand>
-                    <Image
-                        src={Logo}
-                        alt="logo"
-                        className="w-[50px] h-[50px]"
-                        width={100}
-                        height={100}
-                    />
+        <Navbar
+            isBordered
+            classNames={{
+                base: "w-full h-[70px] flex items-center overflow-hidden py-2 bg-white",
+                wrapper: "!max-w-full",
+            }}
+        >
+            <NavbarBrand
+                className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+                onClick={() =>
+                    navigate({
+                        href: Routs.HOME,
+                    })
+                }
+            >
+                <Image
+                    src={Logo}
+                    alt="logo"
+                    className="w-[50px] h-[50px]"
+                    width={100}
+                    height={100}
+                />
 
-                    <SharedText>
-                        
+                {currentScreen !== "mobile" && (
+                    <SharedText className="text-[24px] font-bold">
+                        {t.guest.header.brandName}
                     </SharedText>
-                </NavbarBrand>
+                )}
+            </NavbarBrand>
 
-                <NavbarContent className="flex items-center gap-2">
-                    <NavbarItem>Integrations</NavbarItem>
-                </NavbarContent>
+            <NavbarContent className="flex items-center gap-3" justify="end">
+                <LanguageButton />
 
-                <NavbarContent justify="end">
-                    <NavbarItem>
-                        <Button color="primary" href="#" variant="flat">
-                            Sign Up
-                        </Button>
-                    </NavbarItem>
-                </NavbarContent>
-            </Navbar>
-        </header>
+                <NavbarItem>
+                    <MakeOrderButton />
+                </NavbarItem>
+            </NavbarContent>
+        </Navbar>
     );
 });
 

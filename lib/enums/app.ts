@@ -3,12 +3,8 @@
 // routes of the frontend
 export enum Routs {
     HOME = "/",
-    LOGIN = "/login",
-    REGISTER = "/register",
     ITEMS = "/items",
-    ORDER = "/order",
-    ADMIN_ORDERS = "/admin/orders",
-    ADMIN_ORDER_DETAILS = "/admin/order",
+    ITEM_DETAILS = "/items/ITEM_ID",
     POLICY = "/policy",
     TERMS = "/terms",
 }

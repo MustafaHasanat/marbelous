@@ -10,5 +10,5 @@ lint:
 acp:
 	git add . && git commit -m "feat: adding features" && git push
 
-init-migrate:
-	npx prisma migrate dev --name init && npx prisma generate
+# init-migrate:
+# 	npx prisma migrate dev --name init && npx prisma generate

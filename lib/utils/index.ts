@@ -5,7 +5,6 @@ export {
     convertObjectToSearchParams,
 } from "./helpers/objectHelpers";
 export {
-    formatDateString,
     dateToISO,
     dateToPostDate,
     dateToTimeAgo,

@@ -16,7 +16,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
     return (
         <div className="flex flex-col w-full justify-between">
             <GuestHeader />
-            <main className="w-full min-h-[90vh]">{children}</main>
+            <main className="w-full min-h-[90vh] flex flex-col">{children}</main>
             <GuestFooter />
         </div>
     );

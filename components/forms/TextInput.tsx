@@ -38,7 +38,7 @@ export const TextInput: React.FC<React.HTMLAttributes<HTMLInputElement> & Props 
 }: Props) => {
     const { t } = useLocale();
     const { locale } = useLocale();
-    const { base, input, inputWrapper, label, description, ...restClassNames } = classNames;
+    const { label, description, ...restClassNames } = classNames;
 
     return (
         <Controller
@@ -57,9 +57,6 @@ export const TextInput: React.FC<React.HTMLAttributes<HTMLInputElement> & Props 
                     }}
                     className={cn("w-full", className)}
                     classNames={{
-                        base: cn("", base),
-                        input: cn("", input),
-                        inputWrapper: cn("", inputWrapper),
                         label: cn(
                             "font-bold text-[16px]",
                             locale === "en" ? "left-4" : "right-4",

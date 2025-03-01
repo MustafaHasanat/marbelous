@@ -4,9 +4,6 @@ export const FRONTEND_BASE = process.env.NEXT_PUBLIC_FRONTEND_DOMAIN;
 export const FRONTEND_API_BASE = `${process.env.NEXT_PUBLIC_FRONTEND_DOMAIN}api/`;
 export const BACKEND_BASE = `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}`;
 
-export const CACHE_KEY_NAME = "cache-key";
-export const CACHE_KEY_VALUE = "abc1234567"; // ! don't change this unless you want to clear your users' cache
-
 export const PAGE_SIZE_OBJ = {};
 
 export const SCREENS = {
@@ -14,36 +11,6 @@ export const SCREENS = {
     tablet: 820,
     laptop: 1240,
     desktop: 1500,
-};
-
-export const MONTHS = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-];
-
-export const monthsMapping: { [key: string]: string } = {
-    "01": "January",
-    "02": "February",
-    "03": "March",
-    "04": "April",
-    "05": "May",
-    "06": "June",
-    "07": "July",
-    "08": "August",
-    "09": "September",
-    "10": "October",
-    "11": "November",
-    "12": "December",
 };
 
 // * website metadata

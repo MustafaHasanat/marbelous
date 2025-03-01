@@ -1,3 +1,6 @@
+export { ItemTagAutocomplete } from "./forms/ItemTagAutocomplete";
+export { ItemsListing } from "./shared/ItemsListing";
+export { MakeOrderButton } from "./shared/MakeOrderButton";
 export { DynamicMultiSelect } from "./forms/DynamicMultiSelect";
 export { TextButtonLink } from "./shared/TextButtonLink";
 export { LoadingSpinner } from "./shared/LoadingSpinner";
